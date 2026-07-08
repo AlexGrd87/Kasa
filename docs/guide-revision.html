@@ -1,0 +1,621 @@
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --surface-2: #eceefa;
+    --ink: #1b1d23;
+    --ink-soft: #53566b;
+    --line: #dcdfee;
+    --accent: #ff6060;
+    --accent-ink: #ffffff;
+    --code-bg: #1e2029;
+    --code-ink: #e7e8f0;
+    --code-line: #33364a;
+    --blue: #5b8def;
+    --amber: #d99a3d;
+    --mono: Consolas, 'Cascadia Code', 'SF Mono', ui-monospace, monospace;
+    --sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #14151a;
+    --surface: #1b1d25;
+    --surface-2: #23252f;
+    --ink: #e8e9ee;
+    --ink-soft: #a2a5b8;
+    --line: #33364a;
+    --code-bg: #0f1015;
+    --code-ink: #dfe1ea;
+    --code-line: #2a2d3d;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14151a;
+      --surface: #1b1d25;
+      --surface-2: #23252f;
+      --ink: #e8e9ee;
+      --ink-soft: #a2a5b8;
+      --line: #33364a;
+      --code-bg: #0f1015;
+      --code-ink: #dfe1ea;
+      --code-line: #2a2d3d;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  .guide {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .guide__header {
+    padding: 40px 24px 32px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .guide__eyebrow {
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .guide__title {
+    font-family: var(--mono);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    margin: 8px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  .guide__subtitle {
+    color: var(--ink-soft);
+    font-size: 16px;
+    max-width: 65ch;
+    margin: 0 0 16px;
+  }
+
+  .guide__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+  }
+
+  .guide__body {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 0;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .guide__nav {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    padding: 32px 16px;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid var(--line);
+  }
+
+  .guide__nav a {
+    display: block;
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+    margin-bottom: 2px;
+  }
+
+  .guide__nav a:hover,
+  .guide__nav a:focus-visible {
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+
+  .guide__nav-num {
+    font-family: var(--mono);
+    color: var(--accent);
+    margin-right: 6px;
+  }
+
+  .guide__main {
+    padding: 40px 32px 96px;
+    min-width: 0;
+  }
+
+  section {
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+
+  section h2 {
+    font-family: var(--mono);
+    font-size: 22px;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  section h2 .num {
+    color: var(--accent);
+  }
+
+  section > p.lead {
+    color: var(--ink-soft);
+    max-width: 68ch;
+    margin: 0 0 24px;
+  }
+
+  h3 {
+    font-size: 16px;
+    margin: 0 0 8px;
+  }
+
+  p { max-width: 68ch; }
+
+  .tree {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px 20px;
+    white-space: pre;
+    overflow-x: auto;
+    color: var(--ink-soft);
+  }
+
+  .concept {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 800px) {
+    .concept { grid-template-columns: 1fr; }
+    .guide__body { grid-template-columns: 1fr; }
+    .guide__nav {
+      position: static;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+  }
+
+  .concept__explain strong { color: var(--ink); }
+  .concept__explain p { margin: 0 0 10px; font-size: 14px; color: var(--ink-soft); }
+  .concept__why {
+    font-size: 13px;
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent);
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  pre {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-radius: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    margin: 0;
+    border: 1px solid var(--code-line);
+  }
+
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  .comp-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .comp-card__name {
+    font-family: var(--mono);
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .comp-card p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+
+  .comp-card__tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--surface-2);
+    color: var(--blue);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 4px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  th {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    background: var(--surface-2);
+  }
+
+  td code {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--blue);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .qa {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .qa__q {
+    font-weight: 700;
+    margin: 0 0 8px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .qa__q::before {
+    content: 'Q';
+    font-family: var(--mono);
+    color: var(--accent);
+  }
+
+  .qa__a {
+    margin: 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+    padding-left: 20px;
+    border-left: 2px solid var(--surface-2);
+  }
+
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+
+  .checklist li::before {
+    content: '✓';
+    color: #3fae6a;
+    font-weight: 700;
+    font-family: var(--mono);
+  }
+
+  .git-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 13px;
+    margin: 16px 0;
+  }
+
+  .git-flow__step {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px 12px;
+  }
+
+  .git-flow__arrow { color: var(--ink-soft); }
+
+  .footnote {
+    margin-top: 64px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+</style>
+
+<div class="guide">
+  <header class="guide__header">
+    <div class="guide__eyebrow">Guide de révision — soutenance</div>
+    <h1 class="guide__title">Kasa, expliqué simplement</h1>
+    <p class="guide__subtitle">
+      Ce document reprend chaque concept technique et chaque choix fait sur le projet Kasa,
+      en langage clair, pour que tu puisses le réexpliquer à l'oral sans hésiter.
+    </p>
+    <div class="guide__badges">
+      <span class="badge">React</span>
+      <span class="badge">Vite</span>
+      <span class="badge">React Router</span>
+      <span class="badge">Sass</span>
+      <span class="badge">10/10 étapes</span>
+    </div>
+  </header>
+
+  <div class="guide__body">
+    <nav class="guide__nav">
+      <a href="#vue-ensemble"><span class="guide__nav-num">01</span>Vue d'ensemble</a>
+      <a href="#concepts"><span class="guide__nav-num">02</span>Concepts clés</a>
+      <a href="#composants"><span class="guide__nav-num">03</span>Composants</a>
+      <a href="#routing"><span class="guide__nav-num">04</span>Pages &amp; routing</a>
+      <a href="#git"><span class="guide__nav-num">05</span>Git &amp; GitHub</a>
+      <a href="#questions"><span class="guide__nav-num">06</span>Questions du jury</a>
+      <a href="#checklist"><span class="guide__nav-num">07</span>Checklist finale</a>
+    </nav>
+
+    <main class="guide__main">
+
+      <section id="vue-ensemble">
+        <h2><span class="num">01</span>Vue d'ensemble</h2>
+        <p class="lead">
+          Kasa est une application de location de logements : une page d'accueil qui liste les biens,
+          une page à propos, et une page détail par logement. Les données viennent d'un fichier JSON
+          statique (pas d'API), et tout le style est écrit en Sass.
+        </p>
+        <h3>Structure des dossiers</h3>
+        <div class="tree">src/
+  components/   Header, Footer, Banner, Card, Collapse, Slideshow
+  layouts/      Layout.jsx (Header + contenu + Footer)
+  pages/        Home, About, Housing, Error
+  router/       Router.jsx (toute la logique de routage)
+  data/         logements.json
+  styles/       _variables.scss (couleurs, tailles partagées)</div>
+      </section>
+
+      <section id="concepts">
+        <h2><span class="num">02</span>Concepts clés</h2>
+        <p class="lead">Les notions React que le jury peut te demander de justifier, chacune reliée à du code réel du projet.</p>
+
+        <div class="concept">
+          <div class="concept__explain">
+            <h3>Props</h3>
+            <p>Un composant reçoit des données de son parent via des props — il ne les modifie jamais, il les affiche.</p>
+            <div class="concept__why">Pourquoi : <code>Card</code> est utilisé 20 fois avec des données différentes, sans dupliquer de code.</div>
+          </div>
+          <pre>const Card = ({ id, title, cover }) => (
+  &lt;Link to={`/housing/${id}`} className="card"&gt;
+    &lt;img src={cover} alt={title} /&gt;
+    &lt;p&gt;{title}&lt;/p&gt;
+  &lt;/Link&gt;
+);</pre>
+        </div>
+
+        <div class="concept">
+          <div class="concept__explain">
+            <h3>useState</h3>
+            <p>Un hook qui donne à un composant une mémoire locale : une valeur qui, quand elle change, redéclenche l'affichage.</p>
+            <div class="concept__why">Pourquoi : le <code>Collapse</code> doit se souvenir s'il est ouvert ou fermé, et le <code>Slideshow</code> de quelle image est affichée.</div>
+          </div>
+          <pre>const [isOpen, setIsOpen] = useState(false);
+
+const toggle = () => setIsOpen(!isOpen);</pre>
+        </div>
+
+        <div class="concept">
+          <div class="concept__explain">
+            <h3>Listes &amp; clés</h3>
+            <p><code>map</code> transforme un tableau de données en tableau de composants JSX. React exige une prop <code>key</code> unique et stable sur chaque élément généré.</p>
+            <div class="concept__why">Pourquoi : sans <code>key</code>, React affiche un warning console — interdit par le cahier des charges.</div>
+          </div>
+          <pre>{logements.map(({ id, title, cover }) => (
+  &lt;Card key={id} id={id} title={title} cover={cover} /&gt;
+))}</pre>
+        </div>
+
+        <div class="concept">
+          <div class="concept__explain">
+            <h3>React Router</h3>
+            <p>Gère la navigation sans recharger la page. Une route peut être statique (<code>/about</code>), dynamique (<code>/housing/:id</code>) ou universelle (<code>*</code> pour le 404).</p>
+            <div class="concept__why">Pourquoi : <code>useParams()</code> récupère l'<code>id</code> dans l'URL pour retrouver le bon logement dans le JSON.</div>
+          </div>
+          <pre>&lt;Route path="/housing/:id" element={&lt;Layout&gt;&lt;Housing /&gt;&lt;/Layout&gt;} /&gt;
+&lt;Route path="*" element={&lt;Layout&gt;&lt;Error /&gt;&lt;/Layout&gt;} /&gt;</pre>
+        </div>
+
+        <div class="concept">
+          <div class="concept__explain">
+            <h3>Sass</h3>
+            <p>Un langage qui compile vers du CSS classique, avec des variables, de l'imbrication de sélecteurs et des fichiers partiels importables.</p>
+            <div class="concept__why">Pourquoi : les couleurs et tailles (comme le corail <code>#FF6060</code>) sont définies une seule fois dans <code>_variables.scss</code>, réutilisées partout.</div>
+          </div>
+          <pre>@use '../../styles/variables' as *;
+
+.card__title {
+  color: $color-text-light;
+}</pre>
+        </div>
+      </section>
+
+      <section id="composants">
+        <h2><span class="num">03</span>Composants</h2>
+        <p class="lead">Chaque composant fait une seule chose et vit dans son propre fichier.</p>
+        <div class="comp-grid">
+          <div class="comp-card">
+            <div class="comp-card__name">Header</div>
+            <p>Logo + navigation. Le lien actif est souligné via <code>NavLink</code>.</p>
+            <span class="comp-card__tag">props</span>
+          </div>
+          <div class="comp-card">
+            <div class="comp-card__name">Footer</div>
+            <p>Logo (inversé en blanc via un filtre CSS) + copyright.</p>
+            <span class="comp-card__tag">props</span>
+          </div>
+          <div class="comp-card">
+            <div class="comp-card__name">Layout</div>
+            <p>Header + contenu de la page (reçu via <code>props.children</code>) + Footer.</p>
+            <span class="comp-card__tag">children</span>
+          </div>
+          <div class="comp-card">
+            <div class="comp-card__name">Banner</div>
+            <p>Bandeau réutilisé sur Home (avec titre) et About (sans titre, variante réduite).</p>
+            <span class="comp-card__tag">props</span>
+          </div>
+          <div class="comp-card">
+            <div class="comp-card__name">Card</div>
+            <p>Vignette cliquable d'un logement, menant vers sa page détail.</p>
+            <span class="comp-card__tag">props</span>
+          </div>
+          <div class="comp-card">
+            <div class="comp-card__name">Collapse</div>
+            <p>Fermé par défaut, s'ouvre/ferme au clic. Réutilisé pour About (4 fois) et Housing (2 fois).</p>
+            <span class="comp-card__tag">state</span>
+          </div>
+          <div class="comp-card">
+            <div class="comp-card__name">Slideshow</div>
+            <p>Carrousel avec navigation circulaire ; flèches/numérotation masquées s'il n'y a qu'une image.</p>
+            <span class="comp-card__tag">state</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="routing">
+        <h2><span class="num">04</span>Pages &amp; routing</h2>
+        <p class="lead">Toute la logique de routage vit dans un seul fichier : <code>src/router/Router.jsx</code>.</p>
+        <table>
+          <thead>
+            <tr><th>Route</th><th>Page</th><th>Cas particulier</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>/</code></td><td>Home</td><td>Liste des 20 logements</td></tr>
+            <tr><td><code>/about</code></td><td>About</td><td>4 Collapses</td></tr>
+            <tr><td><code>/housing/:id</code></td><td>Housing</td><td>Redirige vers 404 si l'id n'existe pas</td></tr>
+            <tr><td><code>*</code></td><td>Error (404)</td><td>Capture toute route inconnue</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="git">
+        <h2><span class="num">05</span>Git &amp; GitHub</h2>
+        <p class="lead">Une branche par étape du cahier des charges, une pull request, un merge — pour un historique lisible.</p>
+        <div class="git-flow">
+          <span class="git-flow__step">git checkout -b feature/etape-X</span>
+          <span class="git-flow__arrow">→</span>
+          <span class="git-flow__step">commits</span>
+          <span class="git-flow__arrow">→</span>
+          <span class="git-flow__step">gh pr create</span>
+          <span class="git-flow__arrow">→</span>
+          <span class="git-flow__step">gh pr merge --merge</span>
+        </div>
+        <p>Résultat : 9 pull requests mergées dans <code>main</code>, une par étape (2 à 10 — l'étape 1 est le commit initial). Chaque PR a un titre et une description qui expliquent ce qu'elle apporte.</p>
+      </section>
+
+      <section id="questions">
+        <h2><span class="num">06</span>Questions probables du jury</h2>
+
+        <div class="qa">
+          <p class="qa__q">Pourquoi avoir découpé Collapse en composant séparé plutôt que de dupliquer le code ?</p>
+          <p class="qa__a">Il est utilisé 6 fois (4 sur About, 2 sur Housing) avec un comportement identique : le dupliquer aurait multiplié les bugs à corriger. Un seul composant, une seule source de vérité.</p>
+        </div>
+
+        <div class="qa">
+          <p class="qa__q">Comment gères-tu un id de logement qui n'existe pas dans l'URL ?</p>
+          <p class="qa__a"><code>logements.find()</code> retourne <code>undefined</code> si aucun logement ne correspond. Dans ce cas, le composant retourne <code>&lt;Navigate to="/404" replace /&gt;</code>, qui redirige immédiatement vers la page d'erreur.</p>
+        </div>
+
+        <div class="qa">
+          <p class="qa__q">Comment fonctionne la navigation circulaire du carrousel ?</p>
+          <p class="qa__a">Le calcul <code>(index - 1 + longueur) % longueur</code> pour "précédent" et <code>(index + 1) % longueur</code> pour "suivant" fait boucler l'index automatiquement, sans jamais sortir des bornes du tableau.</p>
+        </div>
+
+        <div class="qa">
+          <p class="qa__q">Pourquoi utiliser Sass plutôt que du CSS classique ?</p>
+          <p class="qa__a">Les variables (couleurs, tailles) sont centralisées dans un seul fichier et importées partout avec <code>@use</code> — un changement de couleur de marque se fait à un seul endroit plutôt que dans chaque fichier CSS.</p>
+        </div>
+
+        <div class="qa">
+          <p class="qa__q">As-tu vérifié qu'il n'y a pas de warning dans la console ?</p>
+          <p class="qa__a">Oui, systématiquement après chaque étape, y compris sur les cas limites (logement à une seule image, id invalide, navigation entre les 4 pages).</p>
+        </div>
+      </section>
+
+      <section id="checklist">
+        <h2><span class="num">07</span>Checklist finale</h2>
+        <ul class="checklist">
+          <li>Responsive vérifié (mobile et desktop) sur les 4 pages</li>
+          <li><code>npm run build</code> réussi sans erreur</li>
+          <li><code>npm run lint</code> (oxlint) sans erreur</li>
+          <li>Zéro warning console sur toutes les pages et interactions</li>
+          <li>Navigation circulaire du carrousel testée aux deux extrémités</li>
+          <li>Collapse testé en ouverture et fermeture</li>
+          <li>Redirection testée pour un id de logement invalide et une route inexistante</li>
+        </ul>
+      </section>
+
+      <p class="footnote">Dépôt du projet : github.com/AlexGrd87/Kasa — 9 pull requests, une par étape du cahier des charges.</p>
+    </main>
+  </div>
+</div>
