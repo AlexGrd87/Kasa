@@ -1,0 +1,20 @@
+@use '../../styles/variables' as *;
+
+.home {
+  &__card-section {
+    background-color: $color-bg-light;
+    border-radius: 15px;
+    padding: 24px;
+    margin-bottom: 48px;
+  }
+
+  &__card-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+
+    @media (max-width: $breakpoint-mobile) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
