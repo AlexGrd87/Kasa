@@ -30,5 +30,15 @@
         text-decoration: underline;
       }
     }
+
+    @media (max-width: $breakpoint-mobile) {
+      gap: 16px;
+
+      a {
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        font-size: 13px;
+      }
+    }
   }
 }
