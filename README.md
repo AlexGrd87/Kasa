@@ -1,16 +1,41 @@
-# React + Vite
+# Kasa
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Application de location d'appartements réalisée dans le cadre de la formation OpenClassrooms.
 
-Currently, two official plugins are available:
+## Stack technique
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React (Vite)
+- React Router (routage)
+- Sass (styles)
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the Oxlint configuration
+L'application est disponible sur `http://localhost:5173`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Fonctionnalités
+
+- Page d'accueil listant les logements disponibles
+- Page à propos avec des sections dépliables (Collapse)
+- Page détail d'un logement : galerie photo avec navigation circulaire, description, équipements
+- Page d'erreur 404 (route inexistante ou identifiant de logement invalide)
+
+## Structure du projet
+
+```
+src/
+  components/   Composants réutilisables (Header, Footer, Banner, Card, Collapse, Slideshow)
+  layouts/       Layout général de l'application (Header + contenu + Footer)
+  pages/         Pages de l'application (Home, About, Housing, Error)
+  router/        Logique de routage (Router.jsx)
+  data/          Données des logements (logements.json)
+  styles/        Variables Sass partagées
+```
+
+## Documentation
+
+Le cahier des charges et les contraintes fonctionnelles du projet sont dans le dossier [`docs/`](docs/).
