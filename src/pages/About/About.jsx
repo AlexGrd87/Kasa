@@ -19,7 +19,7 @@ const collapseItems = [
       "La sécurité de nos utilisateurs est notre priorité. Paiements sécurisés, profils vérifiés et assistance disponible à tout moment.",
   },
   {
-    title: 'Efficacité',
+    title: 'Service',
     content:
       "Une réponse rapide, une réservation simplifiée : Kasa vous permet de trouver et réserver votre logement idéal en quelques clics seulement.",
   },
