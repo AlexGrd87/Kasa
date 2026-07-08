@@ -5,10 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Placeholder en attendant l'image de fond de la maquette */
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(135deg, #3a3a2e, #4d5a4a);
-  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
 
   &--small {
     height: 150px;

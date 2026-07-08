@@ -1,5 +1,6 @@
 import Banner from '../../components/Banner/Banner';
 import Collapse from '../../components/Collapse/Collapse';
+import bannerImage from '../../assets/banner-about.jpg';
 import './About.scss';
 
 const collapseItems = [
@@ -28,7 +29,7 @@ const collapseItems = [
 const About = () => {
   return (
     <>
-      <Banner small />
+      <Banner small image={bannerImage} />
       <div className="about__collapses">
         {collapseItems.map(({ title, content }) => (
           <Collapse key={title} title={title}>
