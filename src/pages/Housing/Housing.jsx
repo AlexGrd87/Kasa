@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import logements from '../../data/logements.json';
 import Slideshow from '../../components/Slideshow/Slideshow';
 import Collapse from '../../components/Collapse/Collapse';
@@ -7,6 +7,10 @@ import './Housing.scss';
 const Housing = () => {
   const { id } = useParams();
   const logement = logements.find((item) => item.id === id);
+
+  if (!logement) {
+    return <Navigate to="/404" replace />;
+  }
 
   const { title, location, tags, host, rating, description, equipments, pictures } = logement;
 
