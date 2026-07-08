@@ -1,0 +1,21 @@
+.banner {
+  height: 200px;
+  border-radius: 15px;
+  margin: 32px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Placeholder en attendant l'image de fond de la maquette */
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    linear-gradient(135deg, #3a3a2e, #4d5a4a);
+  background-blend-mode: multiply;
+
+  &__title {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 32px;
+    margin: 0;
+  }
+}
