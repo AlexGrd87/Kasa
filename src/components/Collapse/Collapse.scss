@@ -1,8 +1,6 @@
 @use '../../styles/variables' as *;
 
 .collapse {
-  border-bottom: 1px solid $color-bg-light;
-
   &__header {
     width: 100%;
     display: flex;
@@ -40,6 +38,13 @@
 
   &__content-inner {
     overflow: hidden;
-    padding: 0 24px;
+    padding-top: 8px;
+  }
+
+  &__content-inner > * {
+    margin: 0;
+    background-color: $color-bg-light;
+    border-radius: 8px;
+    padding: 16px 24px;
   }
 }
