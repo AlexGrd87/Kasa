@@ -1,3 +1,106 @@
+@use '../../styles/variables' as *;
+
 .housing {
   padding-bottom: 48px;
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+
+    @media (max-width: $breakpoint-mobile) {
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+
+  &__title {
+    font-size: 24px;
+    margin: 0 0 8px;
+  }
+
+  &__location {
+    color: $color-primary;
+    font-weight: bold;
+    margin: 0 0 12px;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__tag {
+    background-color: $color-primary;
+    color: $color-text-light;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 4px 12px;
+  }
+
+  &__host-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+
+    @media (max-width: $breakpoint-mobile) {
+      align-items: flex-start;
+    }
+  }
+
+  &__host {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__host-name {
+    margin: 0;
+    font-weight: 500;
+    text-align: right;
+
+    @media (max-width: $breakpoint-mobile) {
+      text-align: left;
+    }
+  }
+
+  &__host-picture {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__rating {
+    display: flex;
+    gap: 4px;
+  }
+
+  &__star {
+    color: $color-bg-light;
+    font-size: 20px;
+
+    &--filled {
+      color: $color-primary;
+    }
+  }
+
+  &__collapses {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__equipments {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 }
