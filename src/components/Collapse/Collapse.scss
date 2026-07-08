@@ -1,0 +1,45 @@
+@use '../../styles/variables' as *;
+
+.collapse {
+  border-bottom: 1px solid $color-bg-light;
+
+  &__header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $color-primary;
+    color: $color-text-light;
+    border: none;
+    border-radius: 8px;
+    padding: 16px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  &__icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+
+    &--open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+
+    &--open {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  &__content-inner {
+    overflow: hidden;
+    padding: 0 24px;
+  }
+}

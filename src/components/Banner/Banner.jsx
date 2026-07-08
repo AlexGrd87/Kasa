@@ -1,9 +1,9 @@
 import './Banner.scss';
 
-const Banner = ({ title }) => {
+const Banner = ({ title, small }) => {
   return (
-    <div className="banner">
-      <h1 className="banner__title">{title}</h1>
+    <div className={`banner ${small ? 'banner--small' : ''}`}>
+      {title && <h1 className="banner__title">{title}</h1>}
     </div>
   );
 };
