@@ -17,12 +17,14 @@
 
   &__message {
     font-size: 24px;
+    color: $color-primary;
     margin: 24px 0 32px;
   }
 
   &__link {
-    color: $color-primary;
-    font-size: 18px;
+    color: $color-text;
+    text-decoration: underline;
+    font-size: 16px;
     font-weight: 500;
   }
 }
