@@ -1,5 +1,6 @@
 import Banner from '../../components/Banner/Banner';
 import Collapse from '../../components/Collapse/Collapse';
+import bannerImage from '../../assets/banner-about.jpg';
 import './About.scss';
 
 const collapseItems = [
@@ -19,7 +20,7 @@ const collapseItems = [
       "La sécurité de nos utilisateurs est notre priorité. Paiements sécurisés, profils vérifiés et assistance disponible à tout moment.",
   },
   {
-    title: 'Efficacité',
+    title: 'Service',
     content:
       "Une réponse rapide, une réservation simplifiée : Kasa vous permet de trouver et réserver votre logement idéal en quelques clics seulement.",
   },
@@ -28,7 +29,7 @@ const collapseItems = [
 const About = () => {
   return (
     <>
-      <Banner small />
+      <Banner small image={bannerImage} />
       <div className="about__collapses">
         {collapseItems.map(({ title, content }) => (
           <Collapse key={title} title={title}>
